@@ -8,8 +8,8 @@ This is to simulate web application writing traffic details to log file.
 Here is the setup process on linux or mac or on cygwin.
 
 * Identify directory /opt/
-* Copy gen_logs directory to /opt - ```sudo mv -f gen_logs /opt```
-* Run ```sudo chown -R `whoami` /opt/gen_logs```
+* Copy gen_logs directory to /opt - ```sudo mv -f gen_logs ~/Downloads```
+* Run ```sudo chown -R `whoami` ~/Downloads/gen_logs``` or ```sudo chmod g+rwx ~/Downloads/gen_logs ```
 * Update PATH in .profile or .bash_profile or create soft links for the shell programs - ```export PATH=$PATH:/opt/gen_logs```
 * Either restart shell or run .profile/.bash_profile script
 * Run ```start_logs.sh``` to start generating web logs

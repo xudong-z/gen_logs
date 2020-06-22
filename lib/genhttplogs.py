@@ -7,6 +7,7 @@ import os
 import sys
 import time
 import urllib
+from urllib.parse import urlparse
 
 class IPGenerator:
     def __init__(self, session_count, session_length):
@@ -17,7 +18,7 @@ class IPGenerator:
     def get_ip(self):
         self.session_gc()
         self.session_create()
-        ip = self.sessions.keys()[random.randrange(len(self.sessions))]
+        ip = list(self.sessions.keys())[random.randrange(len(self.sessions))]
         self.sessions[ip] = self.sessions[ip] + 1
         return ip
 
@@ -133,7 +134,7 @@ class LogGenerator:
             dept    = self.pick_weighted_key(self.DEPARTMENTS)
             cat     = self.pick_weighted_key(self.CATEGORIES)
 
-            request = urllib.quote(request.replace("*PRODUCT*",str(product)).replace("*DEPARTMENT*",dept).replace("*CATEGORY*",cat).lower())
+            request = urlparse(request.replace("*PRODUCT*",str(product)).replace("*DEPARTMENT*",dept).replace("*CATEGORY*",cat).lower())
 
             ext = self.pick_weighted_key(self.EXTENSIONS)
             resp_code = self.pick_weighted_key(self.RESPONSE_CODES)
@@ -146,9 +147,9 @@ class LogGenerator:
 
     def pick_weighted_key(self, hash):
         total = 0
-        for t in hash.values():
+        for t in list(hash.values()):
             total = total + t
-        rand = random.randrange(total)
+        rand = random.randrange(int(total))
 
         running = 0
         for (key, weight) in hash.items():
